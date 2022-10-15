@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
 
+User = get_user_model()
 
 
 class Group(models.Model):
@@ -27,5 +27,4 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         related_name="posts",
         blank=True,
-        null=True)    
-    
+        null=True)
