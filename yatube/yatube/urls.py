@@ -17,13 +17,8 @@ from django.contrib import admin
 #from . import views
 from django.urls import include, path
 
-#app_name = 'MANAGE' 
 
 urlpatterns = [
     path('', include('posts.urls', namespace = 'posts')),
-    #path('', home, name = 'home'),
-    #path('yatube/', views.index, name='list'),
-    
     path('admin/', admin.site.urls),
-    
 ]
