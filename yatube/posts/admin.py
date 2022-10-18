@@ -1,6 +1,5 @@
 from django.contrib import admin
-# Из модуля models импортируем модель Post
-from .models import Post, Group
+from .models import Group, Post
 
 
 class PostAdmin(admin.ModelAdmin):
