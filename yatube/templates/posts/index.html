@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 {% block title %} Главная страница {{ group.title }}{% endblock %}
+{% block content %}
   <div class="container py-5">
-      {% block content %}
-  
-      <h1>Добропожаловать на главную страницу</h1>
-      {% for post in posts %}
-        <article> 
-         <ul>
+    <h1>Добропожаловать на главную страницу</h1>
+    {% for post in posts %}
+      <article> 
+        <ul>
           <li>
             Автор: {{ post.author.get_full_name }}
           </li>
@@ -14,12 +13,12 @@
             Дата публикации: {{ post.pub_date|date:"d E Y" }}
           </li>
         </ul>
-      <p>{{ post.text|linebreaksbr }}</p>    
-      {% if post.group %}   
+        <p>{{ post.text|linebreaksbr }}</p>    
+        {% if post.group %}   
         <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}</a>
-         {% else %}  
-           <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
-         {% endif %}
+        {% else %}  
+        <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
+        {% endif %}
         </article>
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %} 
