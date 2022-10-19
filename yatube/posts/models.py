@@ -15,7 +15,7 @@ class Group(models.Model):
 
     class Meta:
         verbose_name_plural = 'Группы'
-        
+
 
 class Post(models.Model):
     text = models.TextField(verbose_name='Текст', max_length=200)
@@ -34,7 +34,6 @@ class Post(models.Model):
         blank=True,
         null=True,
         verbose_name='Группа')
-
 
     class Meta:
         verbose_name_plural = 'Посты'

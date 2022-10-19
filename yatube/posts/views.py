@@ -3,13 +3,13 @@ from .models import Group, Post
 from django.shortcuts import get_object_or_404, render
 
 
-
 def index(request):
     post = Post.objects.all()[:10]
     context = {
         'posts': post,
     }
     return render(request, 'posts/index.html', context)
+
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
