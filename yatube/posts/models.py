@@ -16,8 +16,6 @@ class Group(models.Model):
     def __str__(self):
         return self.title
 
-    
-
 
 class Post(models.Model):
     text = models.TextField('Текст', max_length=200)
@@ -40,7 +38,6 @@ class Post(models.Model):
     class Meta:
         verbose_name_plural = 'Посты'
         ordering = ('-pub_date',)
-
 
     def __str__(self):
         return self.text[0:30]
