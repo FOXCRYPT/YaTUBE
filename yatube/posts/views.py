@@ -1,10 +1,12 @@
-from .models import Group, Post
-
 from django.shortcuts import get_object_or_404, render
 
+from .models import Group, Post
+
+from django.conf import settings
+    
 
 def index(request):
-    post = Post.objects.all()[:10]
+    post = Post.objects.all()[:settings.CONSTANT]
     context = {
         'posts': post,
     }
@@ -13,7 +15,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:10]
+    posts = group.posts.all()[:settings.CONSTANT]
     context = {
         'group': group,
         'posts': posts,

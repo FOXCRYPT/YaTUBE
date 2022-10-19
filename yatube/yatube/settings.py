@@ -87,6 +87,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+CONSTANT = 10
 
 STATIC_URL = '/static/'
 
