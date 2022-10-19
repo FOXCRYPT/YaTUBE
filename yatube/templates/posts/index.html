@@ -1,26 +1,26 @@
 {% extends 'base.html' %}
-<h1>{{text}}</h1> 
+{% block title %} Записи сообщества {{ group.title }}{% endblock %}
 <div class="container py-5">
-  {% block content %}
+    {% block content %}
   
-  <h1>Добропожаловать на главную страницу</h1>
-  {% for post in posts %}
-  <article> 
-    <ul>
-      <li>
-        Автор: {{ post.author.get_full_name }}
-      </li>
-      <li>
+    <h1>Добропожаловать на главную страницу</h1>
+    {% for post in posts %}
+      <article> 
+       <ul>
+        <li>
+          Автор: {{ post.author.get_full_name }}
+        </li>
+        <li>
         Дата публикации: {{ post.pub_date|date:"d E Y" }}
       </li>
     </ul>
-    <p>{{ post.text }}</p>    
-    {% if post.group|linebreaksbr %}   
-    <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}</a>
-    {% else %}  
-    <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
-    {% endif %}
-    {% if not forloop.last %}<hr>{% endif %}
+    <p>{{ post.text|linebreaksbr }}</p>    
+    {% if post.group %}   
+      <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}</a>
+       {% else %}  
+         <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
+       {% endif %}
+     {% if not forloop.last %}<hr>{% endif %}
   </article>
   {% endfor %} 
 </div> 
