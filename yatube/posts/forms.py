@@ -1,10 +1,7 @@
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import get_user_model
-
-
 from django import forms
 
 from .models import Post
+
 
 class PostForm(forms.ModelForm):
 
@@ -13,7 +10,6 @@ class PostForm(forms.ModelForm):
         labels = {'group': 'Группа', 'text': 'Сообщение'}
         help_texts = {'group': 'Выберите группу', 'text': 'Введите ссообщение'}
         fields = ["group", "text"]
-
 
     def clean_text(self):
         text = self.cleaned_data['text']

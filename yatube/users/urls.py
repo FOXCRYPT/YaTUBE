@@ -31,4 +31,4 @@ urlpatterns = [
         'change/',
         LoginView.as_view(template_name='users/password_change_form.html'),
         name='change'),
-] 
+]
