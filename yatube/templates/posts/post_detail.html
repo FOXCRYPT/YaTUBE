@@ -17,6 +17,7 @@
             
             <!-- если у поста есть группа -->   
             <li class="list-group-item">
+              
             {% if post.group %}    
               Группа: {{ post.group.title }} <!-- Название группы -->
               <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}все записи группы</a>
@@ -35,7 +36,13 @@
             <li class="list-group-item">
               <a href="{% url 'posts:profile' post.author %}">#{{post.group}} >>>
                 все посты пользователя
-            
+              
+              {% if user == post.author %}
+                <a href="{% url 'posts:post_edit' post.pk %}">
+                  редактировать пост
+                </a> 
+              {%endif%}
+              
               </a>
             </li>
           </ul>
