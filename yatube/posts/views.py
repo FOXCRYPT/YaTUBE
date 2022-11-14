@@ -85,4 +85,4 @@ def post_edit(request, post_id):
     form = PostForm(instance=post)
     groups = Group.objects.all()
     return render(request, 'posts/edit_post.html',
-                {'form': form, 'groups': groups})
+                   {'form': form, 'groups': groups})
