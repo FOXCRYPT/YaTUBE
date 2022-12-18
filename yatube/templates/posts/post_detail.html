@@ -1,25 +1,17 @@
 {% extends 'base.html' %}
-{% block title %} Посты {% endblock %}
+{% block title %} Пост {% endblock %}
 {% block content %}
-<html lang="ru">
-  <head>
-    <!-- Подключены иконки, стили и заполенены мета теги -->
-    <title>Пост {{ post|truncatechars:30 }} </title>
-  </head>
-  <body>
-    <main>
       <div class="row">
         <aside class="col-12 col-md-3">
           <ul class="list-group list-group-flush">
             <li class="list-group-item">
-              Дата публикации: {{ post.pub_date|date:"d E Y" }} <!-- 31 июля 1854 --> 
+              Дата публикации: {{ post.pub_date|date:"d E Y" }}
             </li>
             
-            <!-- если у поста есть группа -->   
             <li class="list-group-item">
               
             {% if post.group %}    
-              Группа: {{ post.group.title }} <!-- Название группы -->
+              Группа: {{ post.group.title }}
               <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}все записи группы</a>
             
             {% else %}  
@@ -50,13 +42,9 @@
         <article class="col-12 col-md-9">
           <p>
            {{post.text}}
+           {{ value|linebreaksbr }}
           </p>
         </article>
       </div> 
       {% endblock content %}
-    </main>
-    <footer class="border-top text-center py-3">
-      <p>© {{ year }} Copyright <span style="color:red">Ya</span>tube</p>
-    </footer>
-  </body>
 </html> 

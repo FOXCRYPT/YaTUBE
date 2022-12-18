@@ -1,51 +1,34 @@
 {% extends 'base.html' %}
-{% block title %} 
-Новый пост
+{% block title %}
+  {% if form.instance.pk %}
+    Редактировать запись
+  {% else %}
+    Новый пост
+  {% endif %}
 {% endblock title %}
 {% block content %}
       <div class="container py-5">
         <div class="row justify-content-center">
           <div class="col-md-8 p-5">
             <div class="card">
-              <div class="card-header">{% if not post %} Добавить запись {% else %} Редактировать запись {% endif %}</div>
-                Новый пост             
+              <div class="card-header">{% if form.instance.pk %} Редактировать запись {% else %} Добавить запись {% endif %}</div>            
               </div>
-              <div class="card-body">        
+              {% include 'includes/error.html' %}
+              {% if not form.instance.pk %} 
                 <form method="post" href="../posts/post_create.html">
                   {% csrf_token %}           
-                  <div class="form-group row my-3 p-3">
-                    <label for="id_text">
-                      Текст поста
-                      <span class="required text-danger" >*</span>                  
-                    </label>
-                    <textarea name="text" cols="40" rows="10" class="form-control" required id="id_text"></textarea>                
-                    <small id="id_text-help" class="form-text text-muted">
-                      Текст нового поста
-                    </small>                  
-                  </div>            
-                  <div class="form-group row my-3 p-3">
-                    <label for="id_group">
-                      Группа                  
-                    </label>
-                    <select name="group" class="form-control" id="id_group">
-                      <option value="" selected>---------</option>
-                      {% for group in groups %}
-                        <option value="1">Группа: {{ group }}</option>
-                      {% endfor %}
-                    </select>
-                    <small id="id_group-help" class="form-text text-muted">
-                      Группа, к которой будет относиться пост
-                    </small>
-                  </div>
+                  {% include 'includes/pcheck.html' %}
                   <div class="d-flex justify-content-end">
                     {% csrf_token %} 
-                    <button type="submit" class="btn btn-primary">
-                      {% if is_edit %}
-                        Сохранить
                       {% else %}
-                        Добавить
-                      {% endif %}               
-                    </button> 
+                        <form method="POST" class="post-form">{% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-end">     
+                        </form>
+                      {% endif %}
+                      <button type="submit" class="btn btn-primary">
+                      {% if form.instance.pk %} Сохранить {% else %} Добавить {% endif %} 
+                      </button>             
                   </div>
                 </form>
               </div>

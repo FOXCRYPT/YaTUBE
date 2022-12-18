@@ -1,0 +1,24 @@
+<article>
+    <ul>
+      <li>
+      {% if post.group %}
+        Автор: {{ post.author.get_full_name }} 
+        <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}>все посты пользователя</a>
+      {% endif %}   
+      </li>
+      <li>
+        Дата публикации: {{ post.pub_date|date:"d E Y" }}
+      </li>
+    </ul>
+    <p>
+    {{ post.text }}
+    </p>
+          <a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>  
+  </article>
+  {% if post.group %}   
+      <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}>все записи группы</a>
+  {% else %}  
+        <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
+  {% endif %}       
+          
+  <hr>

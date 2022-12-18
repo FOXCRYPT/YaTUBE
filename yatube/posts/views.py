@@ -1,17 +1,15 @@
 from django.conf import settings
+from .utils import scroll_posts
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .forms import PostForm
-
 from .models import Group, Post, User
 
 
 def index(request):
-    post_list = Post.objects.all().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    post_list = Post.objects.select_related()
+    page_obj = scroll_posts(request, post_list)
     context = {
         'page_obj': page_obj,
     }
@@ -20,29 +18,22 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:settings.CONSTANT]
-    post_list = Post.objects.all().order_by('-pub_date')
-    paginator = Paginator(post_list, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    posts = group.posts.select_related()[:settings.CONSTANT]
+    page_obj = scroll_posts(request, posts)
     context = {
         'page_obj': page_obj,
         'group': group,
-        'posts': posts,
     }
 
     return render(request, 'posts/group_list.html', context)
 
 
 def profile(request, username):
-    author = User.objects.get(username=username)
-    posts = Post.objects.filter(author=author)
-    paginator = Paginator(posts, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    author = get_object_or_404(User, username=username)
+    posts = author.posts.select_related()[:settings.CONSTANT]
+    page_obj = scroll_posts(request, posts)
     context = {
         'page_obj': page_obj,
-        'posts': posts,
         'author': author,
     }
     return render(request, 'posts/profile.html', context)
@@ -68,21 +59,19 @@ def post_create(request):
             post.save()
             return redirect('posts:profile', username=request.user)
     form = PostForm()
-    groups = Group.objects.all()
     return render(request, 'posts/create_post.html',
-                  {'form': form, 'groups': groups})
+                  {'form': form})
 
 
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            return redirect('posts:post_detail', post.id)
+    is_edit = True
+    if post.author == request.user:
+        if request.method == "POST":
+            form = PostForm(request.POST, instance=post)
+            if form.is_valid():
+                form.save(commit=True)
+                return redirect('posts:post_detail', post.id)
     form = PostForm(instance=post)
-    groups = Group.objects.all()
-    return render(request, 'posts/edit_post.html',
-                  {'form': form, 'groups': groups})
+    return render(request, 'posts/create_post.html',
+                  {'form': form, 'is_edit': is_edit})
