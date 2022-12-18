@@ -1,6 +1,5 @@
 from django.conf import settings
 from .utils import scroll_posts
-from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .forms import PostForm
