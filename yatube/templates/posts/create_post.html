@@ -14,18 +14,7 @@
               <div class="card-header">{% if form.instance.pk %} Редактировать запись {% else %} Добавить запись {% endif %}</div>            
               </div>
               {% include 'includes/error.html' %}
-              {% if not form.instance.pk %} 
-                <form method="post" href="../posts/post_create.html">
-                  {% csrf_token %}           
-                  {% include 'includes/pcheck.html' %}
-                  <div class="d-flex justify-content-end">
-                    {% csrf_token %} 
-                      {% else %}
-                        <form method="POST" class="post-form">{% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="d-flex justify-content-end">     
-                        </form>
-                      {% endif %}
+                {% include 'includes/form_inst.html' %}
                       <button type="submit" class="btn btn-primary">
                       {% if form.instance.pk %} Сохранить {% else %} Добавить {% endif %} 
                       </button>             

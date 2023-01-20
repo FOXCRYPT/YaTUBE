@@ -1,13 +1,15 @@
+from itertools import count
 from django.conf import settings
-from .utils import scroll_posts
 from django.shortcuts import get_object_or_404, render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .forms import PostForm
+from .utils import scroll_posts
 from .models import Group, Post, User
 
 
 def index(request):
-    post_list = Post.objects.select_related()
+    post_list = Post.objects.select_related('author', 'group')
     page_obj = scroll_posts(request, post_list)
     context = {
         'page_obj': page_obj,
@@ -17,7 +19,7 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.select_related()[:settings.CONSTANT]
+    posts = group.posts.select_related('author')
     page_obj = scroll_posts(request, posts)
     context = {
         'page_obj': page_obj,
@@ -29,7 +31,7 @@ def group_posts(request, slug):
 
 def profile(request, username):
     author = get_object_or_404(User, username=username)
-    posts = author.posts.select_related()[:settings.CONSTANT]
+    posts = author.posts.select_related('group')
     page_obj = scroll_posts(request, posts)
     context = {
         'page_obj': page_obj,
@@ -40,15 +42,14 @@ def profile(request, username):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    post_author = Post.objects.filter(author=post.author).count()
     context = {
         'post': post,
-        'post_author': post_author,
 
     }
     return render(request, 'posts/post_detail.html', context)
 
 
+@login_required
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -62,15 +63,15 @@ def post_create(request):
                   {'form': form})
 
 
+@login_required
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    is_edit = True
     if post.author == request.user:
-        if request.method == "POST":
+        if request.method == 'POST':
             form = PostForm(request.POST, instance=post)
             if form.is_valid():
                 form.save(commit=True)
                 return redirect('posts:post_detail', post.id)
     form = PostForm(instance=post)
     return render(request, 'posts/create_post.html',
-                  {'form': form, 'is_edit': is_edit})
+                  {'form': form})

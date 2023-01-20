@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% load user_filters %}
+{% for field in form %}
 <div class="form-group row my-3"
 {% if field.field.required %} 
   aria-required="true"
@@ -21,3 +22,4 @@
   {% endif %}
 </div>
 </div>
+{% endfor %}

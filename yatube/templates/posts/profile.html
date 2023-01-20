@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% block title %} Профиль {% endblock %}
 {% block content %}
-
       <div class="container py-5">   
-        <h2>Профайл пользователя {{ author.get_full_name }} </h2>     
-        <h1> {{ post.author.get_full_name }}</h1>
-        <h3>Всего постов: {{posts.count}} </h3>
+        <h2> Профайл пользователя {{ author.get_full_name }} </h2>     
+        <h1> {{ post.author.get_full_name }} </h1>
+        <h3> Всего постов: {{ author.posts.count }} </h3>
         {% for post in page_obj %}   
           {% include 'includes/post.html' %}
         {% endfor %}

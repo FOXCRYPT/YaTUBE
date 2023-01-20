@@ -1,4 +1,10 @@
-<div class="form-group row my-3 p-3">
+{% if not form.instance.pk %} 
+<form method="post"
+    {% if action_url %}
+        action="../posts/post_create.html">
+    {% endif %}
+  {% csrf_token %}           
+  <div class="form-group row my-3 p-3">
     <label for="id_text">
       Текст поста
       <span class="required text-danger" >*</span>                  
@@ -13,7 +19,7 @@
       Группа                  
     </label>
     <select name="group" class="form-control" id="id_group">
-      <option value="" selected>---------</option>
+      <option value="" selected>--------</option>
       {% for group in groups %}
         <option value="1">Группа: {{ group }}</option>
       {% endfor %}
@@ -22,3 +28,11 @@
       Группа, к которой будет относиться пост
     </small>
   </div>
+  <div class="d-flex justify-content-end">
+    {% csrf_token %} 
+      {% else %}
+        <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <div class="d-flex justify-content-end">     
+        </form>
+      {% endif %}
