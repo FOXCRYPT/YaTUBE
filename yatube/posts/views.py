@@ -1,5 +1,3 @@
-from itertools import count
-from django.conf import settings
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
