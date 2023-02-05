@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .forms import PostForm
-from .utils import scroll_posts
 from .models import Group, Post, User
+from .utils import scroll_posts
 
 
 def index(request):

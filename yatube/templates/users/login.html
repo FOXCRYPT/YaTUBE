@@ -10,7 +10,6 @@
         </div>
         <div class="card-body">
           {% include 'includes/error.html' %}  
-
           <form method="post"
             {% if action_url %}
               action="{% url action_url %}"
@@ -18,6 +17,7 @@
           >
           {% csrf_token %}
           {% include 'includes/cycle_Login.html' %}
+          {% include 'includes/form_field.html' %}
           <div class="col-md-6 offset-md-4">
             <button type="submit" class="btn btn-primary">
               Войти

@@ -1,10 +1,6 @@
-<article>
     <ul>
       <li>
-      {% comment %}
-        Не совсем понимаю что из себя должен представлять здесь флаг о котором вы написали
-      {% endcomment %}
-      {% if post.author %}
+      {% if author %}
         Автор: {{ post.author.get_full_name }} 
         <a href="{% url 'posts:profile' post.author %}">#{{post.author}}>все посты пользователя</a>
       {% endif %}
@@ -13,17 +9,13 @@
         Дата публикации: {{ post.pub_date|date:"d E Y" }}
       </li>
     </ul>
-    <p>
+    <br>
       {{ post.text }}
-      {{ value|linebreaks }}
-    </p>
+    </br>
       <a href="{% url 'posts:post_detail' post.id %}">подробная информация </a>
-      {% comment %}
-        Не совсем понимаю что из себя должен представлять здесь флаг о котором вы написали
-      {% endcomment %} 
-  {% if post.group %}   
+  {% if not group and post.group %}   
       <a href="{% url 'posts:group_posts' post.group.slug %}">#{{post.group}}>все записи группы</a>
   {% else %}  
       <span style='color:red'> Этой публикации нет ни в одном сообществе</span>
   {% endif %}
-</article>
+
