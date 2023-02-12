@@ -40,11 +40,10 @@
         </ul>
       </aside>
       <article class="col-12 col-md-9">
-        <br>
-          {{ post.text }}
-          
-      </br>
+        <p>
+          {{ post.text|linebreaksbr }}
+        </p>
       </article>
     </div> 
-    {% endblock content %}
-</html> 
+  {% endblock content %}
+ 
