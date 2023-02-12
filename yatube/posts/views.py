@@ -68,11 +68,11 @@ def post_edit(request, post_id):
     if not post.author == request.user:
         form = PostForm(instance=post)
         return render(request, 'posts/create_post.html',
-                  {'form': form})
+                   {'form': form})
     if not request.method == 'POST':
         form = PostForm(instance=post)
         return render(request, 'posts/create_post.html',
-                  {'form': form})
+                   {'form': form})
     if form.is_valid():
         form.save(commit=True)
         return redirect('posts:post_detail', post.id)
