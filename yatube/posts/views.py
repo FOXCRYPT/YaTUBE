@@ -65,12 +65,10 @@ def post_create(request):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     form = PostForm(request.POST or None, instance=post)
-    if not post.author == request.user:
-        form = PostForm(instance=post)
+    if post.author != request.user:
         return render(request, 'posts/create_post.html',
                       {'form': form})
-    if not request.method == 'POST':
-        form = PostForm(instance=post)
+    if request.method != 'POST':
         return render(request, 'posts/create_post.html',
                       {'form': form})
     if form.is_valid():
