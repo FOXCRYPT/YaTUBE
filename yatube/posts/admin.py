@@ -34,5 +34,6 @@ class GroupAdmin(admin.ModelAdmin):
     list_editable = ('slug',)
     list_filter = ('pub_date', 'author')
 
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
