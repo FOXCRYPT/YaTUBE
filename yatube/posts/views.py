@@ -71,4 +71,4 @@ def post_edit(request, post_id):
         form.save(commit=True)
         return redirect('posts:post_detail', post.id)
     return render(request, 'posts/create_post.html',
-                {'form': form})
+                    {'form': form})
