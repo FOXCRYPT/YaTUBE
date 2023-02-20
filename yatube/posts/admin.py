@@ -25,14 +25,13 @@ class GroupAdmin(admin.ModelAdmin):
         'title',
         'slug',
         'description',
-        'pub_date',
-        'author',
+
 
 
     )
     search_fields = ('title', 'description')
     list_editable = ('slug',)
-    list_filter = ('pub_date', 'author')
+
 
 
 admin.site.register(Post, PostAdmin)

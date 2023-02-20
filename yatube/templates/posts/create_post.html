@@ -14,7 +14,7 @@
               <div class="card-header">{% if form.instance.pk %} Редактировать запись {% else %} Добавить запись {% endif %}</div>            
               </div>
               {% include 'includes/error.html' %}
-              <form method="post"
+              <form method="post">
                 {% csrf_token %}
                 {% include 'includes/form_field.html' %}
                       <button type="submit" class="btn btn-primary">
