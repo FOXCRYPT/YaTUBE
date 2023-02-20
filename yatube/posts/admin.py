@@ -33,6 +33,5 @@ class GroupAdmin(admin.ModelAdmin):
     list_editable = ('slug',)
 
 
-
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
